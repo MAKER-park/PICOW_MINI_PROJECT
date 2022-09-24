@@ -37,7 +37,7 @@ int mode_number = 0;
 
 //----------------------------LED---------------------------------
 #include <NeoPixelConnect.h>
-#define MAXIMUM_NUM_NEOPIXELS 16 //number of led  led 갯
+#define MAXIMUM_NUM_NEOPIXELS 16 //number of led  led 갯수
 
 // Create an instance of NeoPixelConnect and initialize it
 // to use GPIO pin 4 (D12) as the control pin, for a string
@@ -56,8 +56,8 @@ NeoPixelConnect p(2, MAXIMUM_NUM_NEOPIXELS, pio0, 0);
 // Can be included as many times as necessary, without `Multiple Definitions` Linker Error
 #include "RPi_Pico_TimerInterrupt.h"
 
-#define TIMER0_INTERVAL_MS        2000
-#define TIMER0_DURATION_MS        10000
+#define TIMER0_INTERVAL_MS        2000//2sec dust sensor update
+#define TIMER0_DURATION_MS        10000 //10sec update 
 
 //#define TIMER1_INTERVAL_MS        3000
 //#define TIMER1_DURATION_MS        15000
