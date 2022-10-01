@@ -1,28 +1,28 @@
 void get_data() {
-  Serial.println("connect to web!");
+  //Serial.println("connect to web!");
   if ((WiFiMulti.run() == WL_CONNECTED)) {
 
     HTTPClient http;
 
-    Serial.print("[HTTP] begin...\n");
+    //Serial.print("[HTTP] begin...\n");
     if (http.begin("http://cloud.park-cloud.co19.kr/pico_project/view_status.php")) {  // HTTP
 
 
-      Serial.print("[HTTP] GET...\n");
+      //Serial.print("[HTTP] GET...\n");
       // start connection and send HTTP header
       int httpCode = http.GET();
 
       // httpCode will be negative on error
       if (httpCode > 0) {
         // HTTP header has been send and Server response header has been handled
-        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+        //Serial.printf("[HTTP] GET... code: %d\n", httpCode);
 
         // file found at server
         if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
           String payload = http.getString();
           //Serial.println(payload);//get result
           //[{"status":"1","R":"255","G":"0","B":"0"}]
-          String mode_status = payload.substring(12, 13);
+          mode_status = payload.substring(12, 13);
           Serial.println("mode : " + mode_status);
 
           if (mode_status == "0") {
@@ -39,30 +39,31 @@ void get_data() {
                   warring 36 - 75 yellow
                   bed over 76 red
                 */
-                if (PM2_5_val <= 15) { //blue
+                offset = 20;
+                if (PM2_5_val <= 15*offset) { //blue
                   ring_led(0, 0, 50);
-                } else if ((PM2_5_val > 15) && (PM2_5_val <= 35)) { // green
+                } else if ((PM2_5_val > 15*offset) && (PM2_5_val <= 35*offset)) { // green
                   ring_led(0, 50, 0);
-                } else if ((PM2_5_val > 35) && (PM2_5_val <= 75) ) { // yellow
+                } else if ((PM2_5_val > 35*offset) && (PM2_5_val <= 75*offset) ) { // yellow
                   ring_led(50, 50, 0);
-                } else if (PM2_5_val > 75) { //red
+                } else if (PM2_5_val > 75*offset) { //red
                   ring_led(50, 0, 0);
                 }
 
-                Serial.print("[HTTP] GET...\n");
+                //Serial.print("[HTTP] GET...\n");
                 // start connection and send HTTP header
                 int httpCode = http.GET();
 
                 // httpCode will be negative on error
                 if (httpCode > 0) {
                   // HTTP header has been send and Server response header has been handled
-                  Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+                  //Serial.printf("[HTTP] GET... code: %d\n", httpCode);
                 }
 
                 // file found at server
                 if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
                   String payload = http.getString();
-                  Serial.println(payload);//get result
+                  //Serial.println(payload);//get result
                   //init PM_data
                   PM2_5_val = 0;
                 }
@@ -97,14 +98,14 @@ void get_data() {
 
         }
       } else {
-        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+        //Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
       }
 
       http.end();
     } else {
-      Serial.printf("[HTTP} Unable to connect\n");
+      //Serial.printf("[HTTP} Unable to connect\n");
     }
   } else {
-    Serial.println("wifi not connect!");
+    //Serial.println("wifi not connect!");
   }
 }

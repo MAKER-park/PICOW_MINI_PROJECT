@@ -34,6 +34,8 @@ WiFiMulti WiFiMulti;
 String sta, R, G, B;
 int count = 0;
 int mode_number = 0;
+int offset = 18;
+String mode_status;
 
 //----------------------------LED---------------------------------
 #include <NeoPixelConnect.h>
@@ -57,7 +59,7 @@ NeoPixelConnect p(2, MAXIMUM_NUM_NEOPIXELS, pio0, 0);
 #include "RPi_Pico_TimerInterrupt.h"
 
 #define TIMER0_INTERVAL_MS        2000//2sec dust sensor update
-#define TIMER0_DURATION_MS        10000 //10sec update 
+#define TIMER0_DURATION_MS        5000 //5sec update 
 
 //#define TIMER1_INTERVAL_MS        3000
 //#define TIMER1_DURATION_MS        15000
@@ -118,7 +120,7 @@ void loop() {
 
   if (millis() - lastTimer0 >= TIMER0_DURATION_MS)//10sec
   {
-    Serial.println("timer! : " + String(millis() - lastTimer0));
+    //Serial.println("timer! : " + String(millis() - lastTimer0));
     lastTimer0 = millis();
     //get data
     get_data();
