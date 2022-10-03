@@ -30,7 +30,9 @@ void get_data() {
             Serial.println("air mode!");
             get_air();
             if (PM2_5_val != 0) {//PM2_5_val only update
-              if (http.begin("http://cloud.park-cloud.co19.kr/pico_project/insert.php?&pm1=" + String(PM1_0_val) + "&pm2=" + String(PM2_5_val) + "&pm3=" + String(PM10_val))) {  // HTTP
+              if (http.begin("http://cloud.park-cloud.co19.kr/pico_project/insert.php?&pm1=" + String(PM1_0_val) + 
+              "&pm2=" + String(PM2_5_val) + "&pm3=" + 
+              String(PM10_val))) {  // HTTP
 
                 //PM2.5 - led sync
                 /*
